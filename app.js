@@ -1,6 +1,7 @@
 const buttons = document.getElementsByTagName("button");
 const toggle = document.getElementById("toggle");
 const spec = document.getElementsByClassName("special");
+const screen = document.getElementById("screen");
 
 //a bit of lazy manipulation
 for (let i = 0; i < buttons.length; i++) {
@@ -17,7 +18,7 @@ for (let i = 0; i < buttons.length; i++) {
     buttons[i].style.borderBottom = "0.5px solid white";
 }
 
-toggle.addEventListener("click", () => {
+toggle.addEventListener("click", event => {
   if (event.target.innerText === "Advanced") {
     event.target.innerText = "Simple";
     for (let i = 0; i < spec.length; i++) spec[i].style.display = "block";
@@ -26,3 +27,20 @@ toggle.addEventListener("click", () => {
     for (let i = 0; i < spec.length; i++) spec[i].style.display = "none";
   }
 });
+
+var isEmpty = () => {
+  if (screen.innerText == "") {
+    return true;
+  } else return false;
+};
+
+for (let i = 0; i < buttons.length; i++) {
+  buttons[i].addEventListener("click", event => {
+    if (event.target.className === "num") {
+    }
+    if (event.target.className === "binary") {
+    }
+    if (event.target.className === "special") {
+    }
+  });
+}
