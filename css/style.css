@@ -9,10 +9,9 @@
 
 header {
   text-align: center;
-  color: blue;
+  color: rgb(78, 78, 85);
   font: 32px Arial, Helvetica, Sans-serif; /*variant, size, family, style, weight*/
   padding: 3% 0%;
-  border: 1px solid rgba(217, 219, 52, 0.884);
 }
 
 #main {
@@ -21,30 +20,44 @@ header {
 }
 #screendiv {
   display: flex;
-  height: 30px;
-  margin: 3% auto;
+  height: 50px;
+  width: 40%;
+  margin: auto;
+  margin-top: 3%;
+  margin-bottom: 3%;
 }
 #screen {
   resize: none;
   margin: auto;
+  flex: 1;
+  height: 100%;
   background-color: rgb(43, 42, 42);
-  /* border: none; */
 }
 button {
   flex: 1;
-  border: 0.5px solid white;
+  border: none;
+  border-top: 0.5px solid white;
   background-color: rgb(43, 42, 42);
   width: 5%;
-  height: 5%;
+  height: 100%;
   color: white;
 }
 button:hover {
   background-color: grey;
   color: black;
 }
+button:active {
+  background-color: rgba(6, 1, 34, 0.11);
+  color: rgb(255, 255, 255);
+}
 .buttons {
   display: flex;
-  width: inherit;
+  width: 40%;
+  height: 3em;
+  margin: auto;
+}
+.special {
+  display: none;
 }
 footer {
   padding: 1em 0em 0.5em 0em;
