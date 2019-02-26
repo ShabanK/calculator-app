@@ -2,15 +2,6 @@ const buttons = document.getElementsByTagName("button");
 const toggle = document.getElementById("toggle");
 const spec = document.getElementsByClassName("special");
 const screen = document.getElementById("screen");
-// const one = document.querySelector("#one");
-// const two = document.querySelector("#two");
-// const three = document.querySelector("#three");
-// const four = document.querySelector("#four");
-// const five = document.querySelector("#five");
-// const six = document.querySelector("#six");
-// const seven = document.querySelector("#seven");
-// const eight = document.querySelector("#eight");
-// const nine = document.querySelector("#nine");
 const zero = document.querySelector("#zero");
 const num = document.querySelectorAll(".num");
 const point = document.querySelector("#decimal");
@@ -19,13 +10,31 @@ const equal = document.querySelector("#equal");
 const power = document.querySelector("#power");
 const percent = document.querySelector("#percent");
 const log = document.querySelector("#log");
-const multi = document.querySelector("#multi");
-const add = document.querySelector("#add");
-const minus = document.querySelector("#minus");
-const divide = document.querySelector("#divide");
+const binary = document.querySelectorAll(".binary");
+// const multi = document.querySelector("#multi");
+// const add = document.querySelector("#plus");
+// const minus = document.querySelector("#minus");
+// const divide = document.querySelector("#divide");
+const backspace = document.querySelector("#razor");
 let num1; //first number
 let num2; //second number
 var pointCheck = false; //boolean value for decimal point only appearing once
+var gear = true; //true for num1, false for num2
+var op;
+
+//functions
+var exceed = () => {
+  if (screen.innerHTML.length > 8) {
+    return true;
+  } else return false;
+};
+
+//to check if the textarea is blank or not
+var isEmpty = () => {
+  if (screen.innerHTML === "" || screen.innerHTML === "0") {
+    return true;
+  } else return false;
+};
 
 //a bit of lazy manipulation
 for (let i = 0; i < buttons.length; i++) {
@@ -52,25 +61,64 @@ toggle.addEventListener("click", event => {
   }
 });
 
-//to check if the textarea is blank or not
-var isEmpty = () => {
-  if (screen.innerHTML === "0") {
-    return true;
-  } else return false;
-};
-
+// num pad
 for (let i = 0; i < num.length; i++) {
   num[i].addEventListener("click", event => {
-    if (!isEmpty()) {
-      if (!(event.target == point))
-        screen.innerHTML = screen.innerHTML.concat(event.target.innerText);
-    } else {
+    if (isEmpty()) {
+      if (event.target == point) {
+        screen.innerHTML = "0.";
+        pointCheck = true;
+      } else screen.innerHTML = event.target.innerText;
+    }
+    //if the input field isnt empty
+    else if (!exceed()) {
       if (event.target == point) {
         if (!pointCheck) {
           screen.innerHTML = screen.innerHTML.concat(event.target.innerText);
           pointCheck = true;
         }
-      } else screen.innerHTML = event.target.innerText;
+      } else screen.innerHTML = screen.innerHTML.concat(event.target.innerText);
+    }
+  });
+}
+
+//backspace
+backspace.addEventListener("click", () => {
+  if (!isEmpty()) {
+    if (screen.innerHTML.charAt(screen.innerHTML.length - 1) == ".") {
+      pointCheck = false;
+    }
+    screen.innerHTML = screen.innerHTML.substr(0, screen.innerHTML.length - 1);
+  }
+});
+//unary operations
+
+//binary operations
+var result = (number1, number2, operation) => {
+  if (operation == "+") {
+    return (number1 + number2).toString();
+  }
+  if (operation == "-") {
+    return (number1 - number2).toString();
+  }
+  if (operation == "*") {
+    return (number1 * number2).toString();
+  }
+  if (operation == "/") {
+    if ((number2 = 0)) {
+      return "";
+    } else return (number1 / number2).toString();
+  }
+};
+for (let i = 0; i < binary.length; i++) {
+  binary[i].addEventListener("click", () => {
+    if (gear) {
+      num1 = parseFloat(screen.innerHTML);
+      screen.innerHTML = "+";
+      gear = false;
+      op = binary[i].innerText;
+    } else {
+      result(num1, num2, op);
     }
   });
 }
