@@ -11,6 +11,7 @@ const power = document.querySelector("#power");
 const percent = document.querySelector("#percent");
 const log = document.querySelector("#log");
 const binary = document.querySelectorAll(".binary");
+
 // const multi = document.querySelector("#multi");
 // const add = document.querySelector("#plus");
 // const minus = document.querySelector("#minus");
@@ -20,6 +21,7 @@ let num1; //first number
 let num2; //second number
 var pointCheck = false; //boolean value for decimal point only appearing once
 var gear = true; //true for num1, false for num2
+var gear1 = false; // true when num2 is also entered
 var op;
 
 //functions
@@ -105,7 +107,7 @@ var result = (number1, number2, operation) => {
     return (number1 * number2).toString();
   }
   if (operation == "/") {
-    if ((number2 = 0)) {
+    if (number2 == 0) {
       return "";
     } else return (number1 / number2).toString();
   }
@@ -114,11 +116,24 @@ for (let i = 0; i < binary.length; i++) {
   binary[i].addEventListener("click", () => {
     if (gear) {
       num1 = parseFloat(screen.innerHTML);
-      screen.innerHTML = "+";
+      screen.innerHTML = event.target.innerText;
       gear = false;
+      pointCheck = false;
+      gear1 = true;
       op = binary[i].innerText;
     } else {
-      result(num1, num2, op);
+      screen.innerHTML = toString(result(num1, num2, op));
     }
   });
 }
+equal.addEventListener("click", () => {
+  if (!gear && gear1) {
+    num2 = parseFloat(screen.innerHTML);
+    screen.innerHTML = event.target.innerText;
+    gear = true;
+    pointCheck = false;
+    gear1 = true;
+  }
+  num1 = result(num1, num2, op);
+  screen.innerHTML = num1;
+});
