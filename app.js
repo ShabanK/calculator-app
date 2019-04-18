@@ -135,5 +135,5 @@ equal.addEventListener("click", () => {
     gear1 = true;
   }
   num1 = result(num1, num2, op);
-  screen.innerHTML = num1;
+  screen.innerHTML = num1.toString();
 });
